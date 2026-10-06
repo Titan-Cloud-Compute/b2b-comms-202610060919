@@ -72,6 +72,23 @@ async function main() {
   }
 
   console.log(`[seed] colossus_accounts upserted ${count}`);
+
+  // Journey demo users exercised by the hermetic e2e login specs. Seeded
+  // alongside (not instead of) the COLOSSUS_ACCOUNTS_JSON accounts.
+  const journeyUsers = [
+    { email: 'admin@b2b-portal.example.com', name: 'Portal Admin', role: 'ADMIN' },
+    { email: 'vendor@acme.example.com', name: 'Acme Vendor', role: 'VENDOR' },
+    { email: 'buyer@corp.example.com', name: 'Corp Buyer', role: 'CUSTOMER' },
+  ];
+  const journeyHash = bcrypt.hashSync('password', 10);
+  for (const u of journeyUsers) {
+    await prisma.user.upsert({
+      where: { email: u.email },
+      update: { role: u.role, passwordHash: journeyHash },
+      create: { email: u.email, name: u.name, role: u.role, passwordHash: journeyHash },
+    });
+  }
+  console.log(`[seed] journey users upserted ${journeyUsers.length}`);
 }
 
 main()
