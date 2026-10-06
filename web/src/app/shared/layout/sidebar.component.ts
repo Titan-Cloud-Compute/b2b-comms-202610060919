@@ -4,7 +4,13 @@ import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { SafeHtmlPipe } from '../safe-html.pipe';
 import { AuthApi } from '../api/auth-api.service';
-import { FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_MAP } from './nav-items';
+import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_MAP } from './nav-items';
+
+const SIDEBAR_GROUPS: { label: string; paths: string[] }[] = [
+  { label: 'Vendor', paths: ['/vendor/profile', '/channels', '/invoices', '/settings/notifications'] },
+  { label: 'Customer', paths: ['/orders'] },
+  { label: 'Admin', paths: ['/admin/customers', '/admin/audit-log'] },
+];
 import { SIDEBAR_TEMPLATE } from './sidebar.template';
 
 @Component({
@@ -15,7 +21,7 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
   styles: [`
     .sidebar {
       width: 260px;
-      background: white;
+      background: var(--color-white);
       border-right: 1px solid var(--color-border);
       display: flex;
       flex-direction: column;
@@ -30,10 +36,10 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
     }
 
     .sidebar-header {
-      padding: 1.25rem 1.5rem;
+      padding: var(--space-5) var(--space-6);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
       border-bottom: 1px solid var(--color-border);
     }
 
@@ -54,15 +60,15 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
     }
 
     .role-banner {
-      margin: 0.75rem 1rem 0;
-      padding: 0.4rem 0.625rem;
+      margin: var(--space-3) var(--space-4) 0;
+      padding: var(--space-1-5) var(--space-2-5);
       font-size: var(--font-size-xs);
       font-weight: 600;
       letter-spacing: 0.05em;
       border-radius: var(--radius-btn);
       display: inline-flex;
       align-items: center;
-      gap: 0.375rem;
+      gap: var(--space-1-5);
       width: fit-content;
     }
 
@@ -74,10 +80,10 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
 
     .sidebar-nav {
       flex: 1;
-      padding: 0.5rem 0.75rem 1rem;
+      padding: var(--space-2) var(--space-3) var(--space-4);
       display: flex;
       flex-direction: column;
-      gap: 0.125rem;
+      gap: var(--space-0-5);
       overflow-y: auto;
       overscroll-behavior-y: contain;
     }
@@ -87,15 +93,15 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
       font-weight: 700;
       color: var(--color-text-secondary);
       letter-spacing: 0.08em;
-      padding: 0.875rem 1rem 0.375rem;
+      padding: var(--space-3-5) var(--space-4) var(--space-1-5);
       text-transform: uppercase;
     }
 
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
       border-radius: var(--radius-md);
       color: var(--color-text-secondary);
       font-size: var(--font-size-md);
@@ -147,17 +153,17 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
     }
 
     .sidebar-footer {
-      padding: 0.875rem 1.25rem;
+      padding: var(--space-3-5) var(--space-5);
       border-top: 1px solid var(--color-border);
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: var(--space-3);
     }
 
     .lang-toggle-container {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
     }
 
     .lang-label {
@@ -170,14 +176,14 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
 
     .lang-toggle {
       display: flex;
-      gap: 0.25rem;
+      gap: var(--space-1);
       background: var(--color-bg-tertiary);
-      padding: 3px;
+      padding: var(--space-0-75);
       border-radius: var(--radius-btn);
     }
 
     .lang-btn {
-      padding: 0.375rem 0.625rem;
+      padding: var(--space-1-5) var(--space-2-5);
       font-size: var(--font-size-xs);
       font-weight: 600;
       color: var(--color-text-secondary);
@@ -189,7 +195,7 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
       min-height: 32px;
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: var(--space-1);
     }
 
     .lang-btn:hover {
@@ -202,7 +208,7 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
     }
 
     .lang-btn.active {
-      background: white;
+      background: var(--color-white);
       color: var(--color-primary);
       box-shadow: var(--shadow-card);
     }
@@ -218,16 +224,16 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
     }
 
     .lang-btn.active:disabled:hover {
-      background: white;
+      background: var(--color-white);
       color: var(--color-primary);
     }
 
     .settings-link {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: var(--space-3) var(--space-4);
       font-size: var(--font-size-sm);
       font-weight: 500;
       color: var(--color-text-secondary);
@@ -258,13 +264,13 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
     }
 
     .user-row {
       display: flex;
       align-items: center;
-      gap: 0.625rem;
+      gap: var(--space-2-5);
       flex-wrap: nowrap;
       flex: 1;
       min-width: 0;
@@ -272,7 +278,7 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
 
     .user-actions {
       display: flex;
-      gap: 0.25rem;
+      gap: var(--space-1);
       flex-shrink: 0;
     }
 
@@ -284,7 +290,7 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: var(--color-white);
       font-weight: 600;
       font-size: var(--font-size-sm);
       flex-shrink: 0;
@@ -338,9 +344,9 @@ import { SIDEBAR_TEMPLATE } from './sidebar.template';
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 0.625rem 1rem;
-      margin-top: 0.625rem;
+      gap: var(--space-2);
+      padding: var(--space-2-5) var(--space-4);
+      margin-top: var(--space-2-5);
       font-size: var(--font-size-sm);
       font-weight: 600;
       color: var(--color-primary);
@@ -383,6 +389,15 @@ export class SidebarComponent {
 
   readonly firmNavItems = FIRM_NAV_ITEMS;
   readonly adminNavItems = ADMIN_NAV_ITEMS;
+  /** Feature pages grouped by audience (Vendor / Customer / Admin). Any
+      FIRM_NAV_ITEMS entry not claimed by a group stays under "Main". */
+  readonly navGroups: { label: string; items: NavItem[] }[] = SIDEBAR_GROUPS.map(g => ({
+    label: g.label,
+    items: FIRM_NAV_ITEMS.filter(i => g.paths.includes(i.path)),
+  }));
+  readonly mainNavItems: NavItem[] = FIRM_NAV_ITEMS.filter(
+    i => !SIDEBAR_GROUPS.some(g => g.paths.includes(i.path)),
+  );
   // Rendered for every role (see SHARED_NAV_ITEMS) — outside the role branches.
   readonly sharedNavItems = SHARED_NAV_ITEMS;
 

@@ -35,15 +35,15 @@ import { ToastService } from './api/toast.service';
       right: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: var(--space-2);
       z-index: 9999;
       max-width: min(420px, calc(100vw - 2rem));
     }
     .toast {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
       background: var(--color-surface, var(--color-white));
       border: 1px solid var(--color-border, var(--color-border));
       border-radius: var(--radius-md, 10px);
@@ -58,7 +58,7 @@ import { ToastService } from './api/toast.service';
     .toast-warning { border-left: 4px solid var(--color-warning, var(--color-warning)); background: var(--color-warning-bg, var(--color-warning-bg)); }
     .toast-error   { border-left: 4px solid var(--color-error, var(--color-error)); background: var(--color-error-bg, var(--color-error-bg)); }
     .toast-action {
-      padding: 0.25rem 0.625rem;
+      padding: var(--space-1) var(--space-2-5);
       border-radius: var(--radius-sm, 6px);
       border: 1px solid var(--color-border, var(--color-border));
       background: var(--color-bg-primary, var(--color-white));
@@ -74,7 +74,7 @@ import { ToastService } from './api/toast.service';
       font-size: var(--font-size-xl);
       line-height: 1;
       cursor: pointer;
-      padding: 0 0.25rem;
+      padding: 0 var(--space-1);
     }
     @keyframes toast-in {
       from { opacity: 0; transform: translateY(-6px); }

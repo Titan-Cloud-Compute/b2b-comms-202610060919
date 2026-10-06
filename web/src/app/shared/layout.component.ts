@@ -68,6 +68,10 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
 
       <!-- Main Content -->
       <main class="main-content">
+        <!-- Desktop top bar (the mobile header replaces it below 768px) -->
+        <header class="topbar" data-testid="app-topbar">
+          <span class="topbar-title">{{ headerTitle() }}</span>
+        </header>
         <!-- The routed page lives in a wrapper that carries this component's
              style-encapsulation attribute, so the shell can actually give it
              the leftover vertical space (a rule targeting the routed host
@@ -114,10 +118,10 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
     /* Fixed full-width top bar; the app shell is shifted down by --imp-h so the
        fixed sidebar and main scroll region clear it (the var inherits through
        the DOM, so both this component and the sidebar read the same offset). */
-    .impersonation-banner { position: fixed; top: 0; left: 0; right: 0; min-height: 40px; z-index: 400; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 0.5rem 1rem; background: var(--color-warning-900); color: var(--color-white); font-size: var(--font-size-sm); flex-wrap: wrap; }
-    .impersonation-banner .imp-text { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .impersonation-banner { position: fixed; top: 0; left: 0; right: 0; min-height: 40px; z-index: 400; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: var(--space-4); padding: var(--space-2) var(--space-4); background: var(--color-warning-900); color: var(--color-white); font-size: var(--font-size-sm); flex-wrap: wrap; }
+    .impersonation-banner .imp-text { display: inline-flex; align-items: center; gap: var(--space-1-5); }
     .impersonation-banner strong { font-weight: 700; }
-    .impersonation-banner .imp-exit { padding: 0.3rem 0.9rem; background: var(--color-white); color: var(--color-warning-900); border: none; border-radius: var(--radius-sm); font-size: var(--font-size-sm); font-weight: 700; cursor: pointer; }
+    .impersonation-banner .imp-exit { padding: var(--space-1) var(--space-3-5); background: var(--color-white); color: var(--color-warning-900); border: none; border-radius: var(--radius-sm); font-size: var(--font-size-sm); font-weight: 700; cursor: pointer; }
     .impersonation-banner .imp-exit:hover { background: var(--color-error-bg); }
     .layout {
       display: flex;
@@ -134,9 +138,9 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
       left: 0;
       right: 0;
       height: 56px;
-      background: white;
+      background: var(--color-white);
       border-bottom: 1px solid var(--color-border);
-      padding: 0 1rem;
+      padding: 0 var(--space-4);
       align-items: center;
       z-index: 100;
       box-shadow: var(--shadow-nav);
@@ -167,14 +171,14 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
 
     .mobile-lang-toggle {
       display: flex;
-      gap: 0.125rem;
+      gap: var(--space-0-5);
       background: var(--color-bg-tertiary);
-      padding: 2px;
+      padding: var(--space-0-5);
       border-radius: var(--radius-sm);
     }
 
     .mobile-lang-btn {
-      padding: 0.25rem 0.5rem;
+      padding: var(--space-1) var(--space-2);
       font-size: var(--font-size-xs);
       font-weight: 600;
       color: var(--color-text-secondary);
@@ -187,7 +191,7 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
     }
 
     .mobile-lang-btn.active {
-      background: white;
+      background: var(--color-white);
       color: var(--color-primary);
       box-shadow: var(--shadow-card);
     }
@@ -195,7 +199,7 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
     /* Main Content */
     .main-content {
       flex: 1;
-      margin-left: 260px;
+      margin-left: var(--size-sidebar);
       padding: 0;
       overflow-y: auto;
       overflow-x: hidden;
@@ -265,6 +269,31 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
     :host ::ng-deep .routed-area > app-diagnostic,
     :host ::ng-deep .routed-area > app-diagnostic-economics { flex: 1 1 0; min-height: 0; max-height: 100%; overflow: hidden; }
 
+    /* Desktop top bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      min-height: var(--size-topbar);
+      padding: 0 var(--space-6);
+      background: var(--color-surface);
+      border-bottom: var(--space-px) solid var(--color-border);
+      box-shadow: var(--shadow-nav);
+    }
+
+    .topbar-title {
+      font-family: var(--font-display);
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      color: var(--color-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     /* Mobile Overlay */
     .mobile-overlay {
       display: none;
@@ -273,7 +302,7 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: var(--color-overlay-backdrop);
       z-index: 150;
     }
 
@@ -285,7 +314,7 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
       left: 0;
       right: 0;
       height: 64px;
-      background: white;
+      background: var(--color-white);
       border-top: 1px solid var(--color-border);
       padding-bottom: env(safe-area-inset-bottom);
       z-index: 100;
@@ -298,7 +327,7 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.25rem;
+      gap: var(--space-1);
       color: var(--color-text-secondary);
       font-size: var(--font-size-xs);
       font-weight: 500;
@@ -321,13 +350,14 @@ import { NavItem, FIRM_NAV_ITEMS, ADMIN_NAV_ITEMS, SHARED_NAV_ITEMS, ADMIN_TAB_M
     /* Mobile Styles */
     @media (max-width: 768px) {
       .mobile-header { display: flex; }
+      .topbar { display: none; }
       .mobile-overlay { display: block; }
 
       .main-content {
         margin-left: 0;
         padding: 0;
-        padding-top: 56px;
-        padding-bottom: calc(64px + env(safe-area-inset-bottom));
+        padding-top: var(--size-mobile-header);
+        padding-bottom: calc(var(--size-bottom-nav) + env(safe-area-inset-bottom));
         height: 100svh;
         height: 100vh;
         overflow-x: hidden;

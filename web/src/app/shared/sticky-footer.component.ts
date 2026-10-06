@@ -19,8 +19,8 @@ import { AuthService } from './auth.service';
   `,
   styles: [`
     .sticky-footer {
-      padding: 1rem 2rem;
-      background: white;
+      padding: var(--space-4) var(--space-8);
+      background: var(--color-white);
       border-top: 1px solid var(--color-border);
       text-align: center;
     }
@@ -29,7 +29,7 @@ import { AuthService } from './auth.service';
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
       flex-wrap: wrap;
     }
 
@@ -38,7 +38,7 @@ import { AuthService } from './auth.service';
       width: 1px;
       height: 1px;
       padding: 0;
-      margin: -1px;
+      margin: calc(-1 * var(--space-px));
       overflow: hidden;
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;

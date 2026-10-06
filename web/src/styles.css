@@ -2,40 +2,8 @@
 
 /* Colour + typography tokens live ONLY in styles/tokens.css (imported above). */
 
-/* ── Style-token extension (U2.8 codemod) ───────────────────────────────────
- * Declares font-size scale, missing radius/shadow tokens, and --imp-h so that
- * all component files can reference tokens only (no raw literals).            */
 :root {
   --imp-h: 0px;
-
-  /* Font-size scale */
-  --font-size-xs: 0.75rem;    /* 12px – smallest labels / tags */
-  --font-size-sm: 0.875rem;   /* 14px – secondary text, buttons */
-  --font-size-md: 0.9375rem;  /* 15px – comfortable body text */
-  --font-size-lg: 1.125rem;   /* 18px – section headings */
-  --font-size-xl: 1.5rem;     /* 24px – page headings */
-  --font-size-2xl: 2rem;      /* 32px – hero headings */
-  --font-size-input: 16px;    /* iOS-zoom-safe input size */
-
-  /* Radius tokens not covered by tokens.css */
-  --radius-xs: 4px;
-  --radius-btn: 8px;
-  --radius-card: 12px;
-
-  /* Shadow tokens not covered by tokens.css */
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-popup: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.2);
-  --shadow-drawer: -4px 0 24px rgba(0, 0, 0, 0.2);
-  --shadow-nav: 0 1px 3px rgba(14, 23, 38, 0.08);
-  --shadow-header: 0 -1px 3px rgba(14, 23, 38, 0.08);
-  --shadow-sidebar: 1px 0 3px rgba(14, 23, 38, 0.05);
-  --shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.08);
-  --shadow-hover-lg: 0 6px 16px rgba(0, 0, 0, 0.12);
-  --shadow-focus: 0 0 0 3px rgba(var(--color-primary-rgb), 0.15);
-
-  /* Radius for circular elements (avatars, spinners) */
-  --radius-circle: 50%;
 }
 
 /* Global Reset & Base Styles */
@@ -59,7 +27,7 @@ body {
   background: var(--color-bg-secondary);
   color: var(--color-text-primary);
   line-height: 1.5;
-  font-size: 15px;
+  font-size: var(--font-size-md);
   min-height: 100svh;
   min-height: 100vh;
   overscroll-behavior-y: contain;
@@ -78,14 +46,59 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
   font-weight: 600;
   line-height: 1.25;
 }
 
+/* Token-only page primitives (shared by every feature page) */
+.page {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-6) var(--space-8);
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-6);
+}
+
+.page-header h1,
+.page-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.page-card {
+  background: var(--color-surface);
+  border: var(--space-px) solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: var(--space-4) var(--space-4) var(--space-6);
+  }
+  .page-header h1,
+  .page-title {
+    font-size: var(--font-size-lg);
+  }
+}
+
 /* Design-system typography utility classes */
 .heading-2 {
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   font-weight: 600;
   line-height: 1.25;
 }
@@ -111,7 +124,7 @@ button {
 
 /* Ensure inputs don't zoom on iOS */
 input, textarea, select {
-  font-size: 16px;
+  font-size: var(--font-size-input);
 }
 
 /* Smooth scrolling */
@@ -147,7 +160,7 @@ html {
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -193,16 +206,16 @@ html {
   z-index: 60;
   width: max-content;
   max-width: 220px;
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
+  padding: var(--space-1-5) var(--space-2-5);
+  border-radius: var(--radius-sm);
   background: var(--color-text-primary);
   color: var(--color-white);
-  font-size: 0.6875rem;
+  font-size: var(--font-size-2xs);
   font-weight: 400;
   line-height: 1.35;
   white-space: normal;
   text-align: center;
-  box-shadow: 0 4px 14px rgba(14, 23, 38, 0.22);
+  box-shadow: var(--shadow-tooltip);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
