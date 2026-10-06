@@ -151,8 +151,9 @@ export class OrdersComponent implements OnInit {
     try {
       const list = await this.api.get<Order[]>('/api/orders');
       this.orders.set(Array.isArray(list) ? list : []);
-    } catch {
+    } catch (e: any) {
       this.orders.set([]);
+      this.error.set(e?.message || 'Could not load orders');
     }
   }
 
