@@ -106,23 +106,23 @@ import { RouterLink } from '@angular/router';
       min-height: 100vh; display: flex; flex-direction: column;
       background: var(--color-neutral-50); font-family: system-ui, -apple-system, sans-serif;
     }
-    .page-header { background: var(--color-primary); color: white; padding: 0 2rem; }
+    .page-header { background: var(--color-primary); color: var(--color-on-primary); padding: 0 2rem; }
     .header-inner {
       max-width: 800px; margin: 0 auto; height: 56px;
       display: flex; align-items: center; gap: 1rem;
     }
     .back-link {
       display: flex; align-items: center; gap: 0.375rem;
-      color: rgba(255,255,255,0.85); text-decoration: none; font-size: var(--font-size-sm);
+      color: var(--color-on-primary-alpha-85); text-decoration: none; font-size: var(--font-size-sm);
     }
-    .back-link:hover { color: white; }
+    .back-link:hover { color: var(--color-on-primary); }
     .org-label {
       font-size: var(--font-size-xs); font-weight: 500; letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.7); flex: 1; text-align: center;
+      color: var(--color-on-primary-alpha-70); flex: 1; text-align: center;
     }
     .page-main { flex: 1; padding: 2.5rem 1.5rem; }
     .content-card {
-      max-width: 800px; margin: 0 auto; background: white;
+      max-width: 800px; margin: 0 auto; background: var(--color-surface);
       border-radius: var(--radius-card); border: 1px solid var(--color-border); padding: 2.5rem 3rem;
     }
     h1 { font-size: var(--font-size-2xl); font-weight: 700; color: var(--color-primary); margin: 0 0 0.5rem; }
@@ -138,7 +138,7 @@ import { RouterLink } from '@angular/router';
     a { color: var(--color-info-hover); text-decoration: underline; text-underline-offset: 2px; }
     a:hover { color: var(--color-primary); }
     .page-footer {
-      background: white; border-top: 1px solid var(--color-border); padding: 1rem 2rem;
+      background: var(--color-surface); border-top: 1px solid var(--color-border); padding: 1rem 2rem;
       display: flex; justify-content: center; align-items: center; gap: 0.75rem;
       font-size: var(--font-size-xs); color: var(--color-text-secondary);
     }

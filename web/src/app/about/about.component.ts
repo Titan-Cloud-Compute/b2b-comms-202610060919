@@ -53,7 +53,7 @@ import { StickyFooterComponent } from '../shared/sticky-footer.component';
       display: flex;
       flex-direction: column;
       padding: 3rem 2rem;
-      color: white;
+      color: var(--color-on-primary);
     }
 
     .brand-content {
@@ -81,7 +81,7 @@ import { StickyFooterComponent } from '../shared/sticky-footer.component';
       font-weight: 700;
       line-height: 1.2;
       margin: 0 0 1rem;
-      color: white;
+      color: var(--color-on-primary);
     }
 
     .brand-tagline {
@@ -118,8 +118,8 @@ import { StickyFooterComponent } from '../shared/sticky-footer.component';
       font-family: var(--font-display);
       font-weight: 700;
       font-size: var(--font-size-sm);
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: var(--color-on-primary-alpha-14);
+      border: 1px solid var(--color-on-primary-alpha-28);
       color: var(--color-white);
     }
 
@@ -148,7 +148,7 @@ import { StickyFooterComponent } from '../shared/sticky-footer.component';
       min-height: 44px;
       padding: 0.625rem 1.25rem;
       border-radius: var(--radius-btn);
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      border: 1px solid var(--color-on-primary-alpha-40);
       color: var(--color-white);
       font-size: var(--font-size-md);
       font-weight: 600;
@@ -156,7 +156,7 @@ import { StickyFooterComponent } from '../shared/sticky-footer.component';
     }
 
     .signin-link:hover {
-      background: rgba(255, 255, 255, 0.14);
+      background: var(--color-on-primary-alpha-14);
     }
 
     @media (max-width: 768px) {
