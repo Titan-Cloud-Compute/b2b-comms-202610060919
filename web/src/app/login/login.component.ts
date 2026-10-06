@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { AuthService } from '../shared/auth.service';
+import { AuthService, User } from '../shared/auth.service';
 import { StickyFooterComponent } from '../shared/sticky-footer.component';
 import { AuthApi } from '../shared/api/auth-api.service';
 import {
@@ -180,6 +180,8 @@ export class LoginComponent {
       // unfinished-intake users back to their spot in the conversation.
       if (this.auth.hasAdminRole()) {
         this.router.navigate(['/admin/customers']);
+      } else if (this.auth.user()?.role === 'VENDOR') {
+        this.router.navigate(['/vendor/profile']);
       } else {
         // returnUrl round-trip: when the session-expiry redirect carried the
         // interrupted destination (e.g. /integrations), resume there instead
@@ -218,28 +220,33 @@ export class LoginComponent {
    */
   private previewSignIn() {
     const isAdmin = /admin/i.test(this.email);
+    const isVendor = !isAdmin && /vendor/i.test(this.email);
     const name = this.email.split('@')[0];
     this.auth.setUser(
       isAdmin
         ? { id: 'preview-admin', email: this.email, name, role: 'ADMIN' }
         : {
-            id: 'preview-user',
+            id: isVendor ? 'preview-vendor' : 'preview-user',
             email: this.email,
             name,
-            role: 'USER',
+            role: isVendor ? 'VENDOR' : 'USER',
           },
     );
-    this.router.navigate([isAdmin ? '/admin/customers' : '/dashboard']);
+    this.router.navigate([
+      isAdmin ? '/admin/customers' : isVendor ? '/vendor/profile' : '/dashboard',
+    ]);
   }
 
-  private mapRole(
-    backendRole: string,
-  ): 'USER' | 'ADMIN' | 'SUPER_ADMIN' {
+  private mapRole(backendRole: string): User['role'] {
     switch (backendRole) {
       case 'ADMIN':
         return 'ADMIN';
       case 'SUPER_ADMIN':
         return 'SUPER_ADMIN';
+      case 'VENDOR':
+        return 'VENDOR';
+      case 'CUSTOMER':
+        return 'CUSTOMER';
       default:
         return 'USER';
     }

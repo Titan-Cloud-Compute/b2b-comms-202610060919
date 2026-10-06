@@ -17,7 +17,7 @@ import { RouterLink } from '@angular/router';
         <h1 class="landing-title">Enterprise Platform</h1>
         <p class="landing-subtitle">A modern platform for your organization.</p>
         <div class="landing-actions">
-          <a routerLink="/login" class="btn-signin">Sign In</a>
+          <a routerLink="/login" class="btn-signin">Log in</a>
           <a routerLink="/signup" class="btn-signin">Sign up</a>
         </div>
       </div>
