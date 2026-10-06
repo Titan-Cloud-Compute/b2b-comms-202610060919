@@ -11,77 +11,97 @@ import { FormsModule } from '@angular/forms';
         <h1>Dashboard</h1>
         <p class="subtitle">Welcome to the platform.</p>
       </header>
-      <div class="placeholder-card">
-        <p class="placeholder-text">Your content will appear here.</p>
-        <form class="placeholder-form" (ngSubmit)="$event.preventDefault()">
-          <div class="form-group">
-            <label for="ph-field-1">Field 1</label>
-            <input type="text" id="ph-field-1" [(ngModel)]="field1" name="field1" placeholder="Enter value…" />
-          </div>
-          <div class="form-group">
-            <label for="ph-field-2">Field 2</label>
-            <input type="text" id="ph-field-2" [(ngModel)]="field2" name="field2" placeholder="Enter value…" />
-          </div>
-          <button type="submit" class="btn-primary" disabled>Submit</button>
-        </form>
+      <div class="card-grid">
+        <div class="metric-card">
+          <p class="metric-label">Field 1</p>
+          <input type="text" id="ph-field-1" [(ngModel)]="field1" name="field1" placeholder="Enter value…" />
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Field 2</p>
+          <input type="text" id="ph-field-2" [(ngModel)]="field2" name="field2" placeholder="Enter value…" />
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Status</p>
+          <p class="metric-value">Active</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Orders</p>
+          <p class="metric-value">—</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Invoices</p>
+          <p class="metric-value">—</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Channels</p>
+          <p class="metric-value">—</p>
+        </div>
+      </div>
+      <div class="action-row">
+        <button type="submit" class="btn-primary" disabled>Submit</button>
       </div>
     </div>
   `,
   styles: [`
     .dashboard-page {
-      max-width: 800px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: var(--space-8) var(--space-4);
     }
     .page-header {
-      margin-bottom: 2rem;
+      margin-bottom: var(--space-8);
     }
     h1 {
       font-size: var(--font-size-xl);
       color: var(--color-text-primary);
-      margin: 0 0 0.25rem;
+      margin: 0 0 var(--space-1);
     }
     .subtitle {
       color: var(--color-text-secondary);
       font-size: var(--font-size-sm);
       margin: 0;
     }
-    .placeholder-card {
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    .metric-card {
       background: var(--color-surface);
       border-radius: var(--radius-card);
       border: 1px solid var(--color-border);
-      padding: 2rem;
-    }
-    .placeholder-text {
-      color: var(--color-text-secondary);
-      margin: 0 0 1.5rem;
-    }
-    .placeholder-form {
+      padding: var(--space-6);
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: var(--space-2);
     }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.375rem;
-    }
-    .form-group label {
+    .metric-label {
       font-size: var(--font-size-sm);
       font-weight: 600;
-      color: var(--color-text-primary);
+      color: var(--color-text-secondary);
+      margin: 0;
     }
-    .form-group input {
-      padding: 0.625rem 0.75rem;
+    .metric-value {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+    .metric-card input {
+      padding: var(--space-2-5) var(--space-3);
       font-size: var(--font-size-input);
       border: 1px solid var(--color-gray-300);
       border-radius: var(--radius-btn);
       background: var(--color-surface);
       min-height: 44px;
     }
+    .action-row {
+      display: flex;
+    }
     .btn-primary {
       align-self: flex-start;
-      padding: 0.625rem 1.5rem;
+      padding: var(--space-2-5) var(--space-6);
       font-size: var(--font-size-sm);
       font-weight: 600;
       color: var(--color-on-primary);
@@ -91,6 +111,11 @@ import { FormsModule } from '@angular/forms';
       cursor: not-allowed;
       opacity: 0.6;
       min-height: 44px;
+    }
+    @media (max-width: 768px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
     }
   `]
 })

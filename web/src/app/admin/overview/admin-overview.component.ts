@@ -43,13 +43,13 @@ type AdminTab = 'overview' | 'conversations' | 'documents' | 'doctypes' | 'modul
   imports: [CommonModule, FormsModule],
   templateUrl: './admin-overview.component.html',
   styles: [`
-    .stats-section { margin-bottom: 2rem; }
+    .stats-section { margin-bottom: var(--space-8); }
 
     /* Analytics panel */
-    .analytics-panel { background: var(--color-surface); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-card); margin-bottom: 1.5rem; }
-    .panel-title { display: flex; align-items: center; gap: 0.5rem; font-size: var(--font-size-sm); font-weight: 700; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 1.25rem; }
-    .analytics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-    .analytics-card { display: flex; align-items: center; gap: 0.875rem; padding: 1rem; background: var(--color-neutral-50); border-radius: var(--radius-card); }
+    .analytics-panel { background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-card); margin-bottom: var(--space-6); }
+    .panel-title { display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); font-weight: 700; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 var(--space-5); }
+    .analytics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-4); }
+    .analytics-card { display: flex; align-items: center; gap: var(--space-3-5); padding: var(--space-4); background: var(--color-neutral-50); border-radius: var(--radius-card); }
     .analytics-card.disabled { opacity: 0.5; }
     /* KPI tiles drill down into the admin Reports console — keep them looking
        like the original cards while reading as interactive controls. */
@@ -72,24 +72,24 @@ type AdminTab = 'overview' | 'conversations' | 'documents' | 'doctypes' | 'modul
     .coming-soon { color: var(--color-warning-600); font-weight: 600; }
 
     /* Filter bar */
-    .filter-bar { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .filter-controls { display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap; }
-    .filter-group { display: flex; flex-direction: column; gap: 0.25rem; }
+    .filter-bar { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-4); margin-bottom: var(--space-4); flex-wrap: wrap; }
+    .filter-controls { display: flex; gap: var(--space-3); align-items: flex-end; flex-wrap: wrap; }
+    .filter-group { display: flex; flex-direction: column; gap: var(--space-1); }
     .filter-group label { font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
-    .filter-group select { border: 1px solid var(--color-neutral-200); border-radius: var(--radius-btn); padding: 0.5rem 0.75rem; font-size: var(--font-size-sm); color: var(--color-text-primary); background: var(--color-surface); cursor: pointer; outline: none; }
+    .filter-group select { border: 1px solid var(--color-neutral-200); border-radius: var(--radius-btn); padding: var(--space-2) var(--space-3); font-size: var(--font-size-sm); color: var(--color-text-primary); background: var(--color-surface); cursor: pointer; outline: none; }
     .filter-group select:focus { border-color: var(--color-primary); }
-    .btn-clear { background: none; border: none; color: var(--color-error-600); font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; padding: 0.5rem 0.5rem; text-decoration: underline; }
+    .btn-clear { background: none; border: none; color: var(--color-error-600); font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; padding: var(--space-2); text-decoration: underline; }
     .export-group { display: flex; align-items: center; }
     .export-dropdown { position: relative; }
-    .btn-export { display: inline-flex; align-items: center; gap: 0.375rem; background: var(--color-primary); color: var(--color-on-primary); border: none; border-radius: var(--radius-btn); padding: 0.5rem 1rem; font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; }
+    .btn-export { display: inline-flex; align-items: center; gap: var(--space-1-5); background: var(--color-primary); color: var(--color-on-primary); border: none; border-radius: var(--radius-btn); padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; }
     .btn-export:hover { background: var(--color-primary-600); }
     .export-menu { position: absolute; right: 0; top: calc(100% + 4px); background: var(--color-surface); border: 1px solid var(--color-neutral-200); border-radius: var(--radius-md); box-shadow: var(--shadow-popup); min-width: 200px; z-index: 100; overflow: hidden; }
-    .export-menu button { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; font-size: var(--font-size-sm); color: var(--color-gray-700); background: none; border: none; cursor: pointer; }
+    .export-menu button { display: block; width: 100%; text-align: left; padding: var(--space-3) var(--space-4); font-size: var(--font-size-sm); color: var(--color-gray-700); background: none; border: none; cursor: pointer; }
     .export-menu button:hover { background: var(--color-neutral-50); }
 
     /* Original styles */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-    .stat-card { background: var(--color-surface); border-radius: var(--radius-card); padding: 1.25rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-card); border: none; text-align: left; cursor: pointer; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-4); }
+    .stat-card { background: var(--color-surface); border-radius: var(--radius-card); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4); box-shadow: var(--shadow-card); border: none; text-align: left; cursor: pointer; }
     .stat-card.clickable { cursor: pointer; transition: all 0.2s ease; border: 2px solid transparent; position: relative; }
     .stat-card.clickable:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover-lg); border-color: var(--color-on-primary-muted); }
     .stat-card.clickable:active { transform: scale(0.98); }
@@ -101,14 +101,14 @@ type AdminTab = 'overview' | 'conversations' | 'documents' | 'doctypes' | 'modul
     .stat-content { display: flex; flex-direction: column; }
     .stat-value { font-size: var(--font-size-xl); font-weight: 700; color: var(--color-text-primary); }
     .stat-label { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
-    .stat-action { position: absolute; bottom: 0.75rem; right: 1rem; font-size: var(--font-size-xs); color: var(--color-primary); font-weight: 600; opacity: 0; transition: opacity 0.2s; }
+    .stat-action { position: absolute; bottom: var(--space-3); right: var(--space-4); font-size: var(--font-size-xs); color: var(--color-primary); font-weight: 600; opacity: 0; transition: opacity 0.2s; }
     .stat-card.clickable:hover .stat-action { opacity: 1; }
-    .attention-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-    .card { background: var(--color-surface); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-card); margin-bottom: 2rem; }
-    .attention-card { background: var(--color-surface); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-card); margin-bottom: 0; }
-    .attention-card h3 { display: flex; align-items: center; gap: 0.5rem; font-size: var(--font-size-lg); color: var(--color-text-primary); margin: 0 0 1rem 0; }
-    .attention-list { display: flex; flex-direction: column; gap: 0.5rem; }
-    .attention-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--color-neutral-50); border-radius: var(--radius-md); transition: all 0.15s; }
+    .attention-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-6); margin-top: var(--space-6); }
+    .card { background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-card); margin-bottom: var(--space-8); }
+    .attention-card { background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-card); margin-bottom: 0; }
+    .attention-card h3 { display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-lg); color: var(--color-text-primary); margin: 0 0 var(--space-4) 0; }
+    .attention-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .attention-item { display: flex; justify-content: space-between; align-items: center; padding: var(--space-3) var(--space-4); background: var(--color-neutral-50); border-radius: var(--radius-md); transition: all 0.15s; }
     .attention-item.clickable-row:hover { background: var(--color-primary-light); cursor: pointer; }
     .attention-info { display: flex; flex-direction: column; }
     .attention-name { font-weight: 600; color: var(--color-text-primary); font-size: var(--font-size-md); }
