@@ -4,7 +4,7 @@
  * Unknown paths (not actual files) return index.html so Angular routing works.
  */
 import { createServer } from 'node:http';
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, statSync, readFileSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
@@ -28,6 +28,16 @@ const MIME = {
   '.webmanifest': 'application/manifest+json',
 };
 
+// Hermetic runs must not load the off-cluster Colossus feedback widget: drop the
+// window.__COLOSSUS_FEEDBACK__ config script and its loader.js tag from index.html.
+function sendIndex(res, indexPath) {
+  const html = readFileSync(indexPath, 'utf-8')
+    .replace(/<script>\s*window\.__COLOSSUS_FEEDBACK__[\s\S]*?<\/script>/g, '')
+    .replace(/<script[^>]*src="[^"]*\/ingest\/v1\/loader\.js[^"]*"[^>]*>\s*<\/script>/g, '');
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end(html);
+}
+
 const server = createServer((req, res) => {
   const urlPath = new URL(req.url, 'http://localhost').pathname;
 
@@ -37,6 +47,10 @@ const server = createServer((req, res) => {
 
   // Serve the file if it exists and is a regular file
   if (existsSync(filePath) && statSync(filePath).isFile()) {
+    if (filePath.endsWith('index.html')) {
+      sendIndex(res, filePath);
+      return;
+    }
     const ext = extname(filePath).toLowerCase();
     const mime = MIME[ext] || 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': mime });
@@ -51,8 +65,7 @@ const server = createServer((req, res) => {
     res.end('index.html not found — run ng build first');
     return;
   }
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-  createReadStream(indexPath).pipe(res);
+  sendIndex(res, indexPath);
 });
 
 server.listen(port, '127.0.0.1', () => {

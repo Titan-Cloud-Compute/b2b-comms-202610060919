@@ -182,6 +182,8 @@ export class LoginComponent {
         this.router.navigate(['/admin/customers']);
       } else if (this.auth.user()?.role === 'VENDOR') {
         this.router.navigate(['/vendor/profile']);
+      } else if (this.auth.user()?.role === 'CUSTOMER') {
+        this.router.navigate(['/orders']);
       } else {
         // returnUrl round-trip: when the session-expiry redirect carried the
         // interrupted destination (e.g. /integrations), resume there instead
