@@ -1,25 +1,23 @@
-import { Controller, NotImplementedException, UseGuards, Put, Get } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Put, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UserRole } from '@prisma/client';
+import type { Request } from 'express';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
-import { Roles, RolesGuard } from '../../auth/roles.guard';
 import { NotificationPreferencesService } from './notification-preferences.service';
 
 @ApiTags('notification-preferences')
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.USER)
-@Controller('api/notification-preferences')
+@UseGuards(JwtAuthGuard)
+@Controller('api/notifications/preferences')
 export class NotificationPreferencesController {
   constructor(private readonly notificationpreferences: NotificationPreferencesService) {}
 
-  @Put('api/notifications/preferences')
-  async putApiNotificationsPreferences() {
-    throw new NotImplementedException();
+  @Put()
+  @HttpCode(HttpStatus.OK)
+  async putApiNotificationsPreferences(@Req() req: Request, @Body() body: unknown) {
+    return this.notificationpreferences.put(req.session!.userId, body);
   }
 
-  @Get('api/notifications/preferences')
-  async getApiNotificationsPreferences() {
-    throw new NotImplementedException();
+  @Get()
+  async getApiNotificationsPreferences(@Req() req: Request) {
+    return this.notificationpreferences.get(req.session!.userId);
   }
-
 }
