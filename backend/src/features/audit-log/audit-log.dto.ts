@@ -1,4 +1,5 @@
 // AuditLog DTOs
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export interface GetApiAdminAuditLogRequestDto {
 }
@@ -10,13 +11,19 @@ export interface GetApiAdminAuditLogResponseDto {
   createdAt: string;
 }
 
-export interface PostApiAdminAuditLogRequestDto {
-  action: string;
-  userId: string;
+export class PostApiAdminAuditLogRequestDto {
+  @IsString()
+  @IsNotEmpty()
+  action!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  userId!: string;
 }
 
 export interface PostApiAdminAuditLogResponseDto {
   id: string;
   action: string;
+  userId: string;
   createdAt: string;
 }
